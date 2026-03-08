@@ -4,7 +4,6 @@ import os
 import sys
 from importlib.resources import files as importlib_files
 
-
 def main():
     parser = argparse.ArgumentParser(
         description="A GPU-accelerated grep tool."
