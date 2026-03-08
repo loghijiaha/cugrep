@@ -4,7 +4,7 @@ import os # Added import os
 
 setup(
     name='pycugrep',
-    version='0.1.1', # Incremented version to 0.1.1
+    version='0.1.1',
     packages=['pycugrep'],
     package_dir={'pycugrep': 'pycugrep'},
     entry_points={
