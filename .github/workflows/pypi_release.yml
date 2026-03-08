@@ -1,33 +1,70 @@
 
-name: PyPI Release
+name: Upload Python Package
 
-on: # Trigger on pushes to master or main branches
+on:
   push:
     branches:
       - master
       - main
+    paths:
+      - 'CMakeLists.txt'
+      - 'include/**'
+      - 'src/**'
+      - 'python/pycugrep/**'
+      - 'python/setup.py'
+      - 'python/pyproject.toml'
+      - 'python/README.md'
+      - 'python/LICENSE'
+  # Optional: also allow manual trigger for testing
+  workflow_dispatch:
+
+permissions:
+  contents: read
 
 jobs:
-  deploy:
+  build-dists:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-    - name: Set up Python
-      uses: actions/setup-python@v5
-      with:
-        python-version: '3.x'
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
 
-    - name: Install build dependencies
-      run: pip install build twine
+      - name: Install build dependencies
+        run: |
+          python -m pip install build
+          python -m pip install setuptools wheel # Ensure setuptools and wheel are installed for build
 
-    - name: Build package
-      run: python -m build
+      - name: Build distributions
+        run: python -m build python/ # Build from the python/ subdirectory
 
-    - name: Publish package to PyPI
-      env:
-        TWINE_USERNAME: __token__
-        TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
-      run: twine upload dist/*
+      - name: Upload distributions
+        uses: actions/upload-artifact@v4
+        with:
+          name: pypi-dists
+          path: python/dist/
+
+  pypi-publish:
+    runs-on: ubuntu-latest
+    needs: build-dists
+    permissions:
+      id-token: write # IMPORTANT: this permission is mandatory for trusted publishing
+
+    environment:
+      name: pypi
+      url: https://pypi.org/project/pycugrep/
+
+    steps:
+      - name: Retrieve distributions
+        uses: actions/download-artifact@v4
+        with:
+          name: pypi-dists
+          path: dist/
+
+      - name: Publish distributions to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          packages-dir: dist/
