@@ -1,6 +1,6 @@
 Metadata-Version: 2.4
 Name: pycugrep
-Version: 0.1.0
+Version: 0.1.1
 Summary: A GPU-accelerated grep tool built with cuDF.
 Home-page: https://github.com/your-repo/pycugrep
 Classifier: Programming Language :: Python :: 3
