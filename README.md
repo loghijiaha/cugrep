@@ -14,7 +14,15 @@ CuGrep is a high-performance `grep` utility that leverages NVIDIA GPUs and the c
 
 ## Installation
 
-### Prerequisites
+### Python Package
+
+To install `pycugrep` from PyPI, you will need a system with an NVIDIA GPU and CUDA installed. It's recommended to install via pip:
+
+```bash
+pip install pycugrep
+```
+
+### Prerequisites for Building from Source
 
 - NVIDIA GPU with CUDA compatibility (Compute Capability 7.0+ recommended)
 - CUDA Toolkit (version 11.5+ recommended)
