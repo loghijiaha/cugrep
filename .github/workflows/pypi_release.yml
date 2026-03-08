@@ -24,6 +24,8 @@ permissions:
 jobs:
   build-dists:
     runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.get_version.outputs.version }}
 
     steps:
       - uses: actions/checkout@v4
@@ -37,6 +39,15 @@ jobs:
         run: |
           python -m pip install build
           python -m pip install setuptools wheel # Ensure setuptools and wheel are installed for build
+
+      - name: Get package version
+        id: get_version
+        run: |
+          # Extract version from setup.py
+          BASE_VERSION=$(python -c "import re; print(re.search(r"version=['"]([0-9.]+?)['"]", open('python/setup.py').read()).group(1))")
+          DYNAMIC_VERSION="${BASE_VERSION}.post${{ github.run_number }}"
+          echo "Setting dynamic version: ${DYNAMIC_VERSION}"
+          echo "version=${DYNAMIC_VERSION}" >> $GITHUB_OUTPUT
 
       - name: Build distributions
         run: python -m build python/ # Build from the python/ subdirectory
@@ -68,3 +79,4 @@ jobs:
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
           packages-dir: dist/
+          version: ${{ needs.build-dists.outputs.version }}
