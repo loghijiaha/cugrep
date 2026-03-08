@@ -1,5 +1,6 @@
 
 from setuptools import setup, find_packages
+import os # Added import os
 
 setup(
     name='pycugrep',
