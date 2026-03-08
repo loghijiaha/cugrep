@@ -1,0 +1,2 @@
+[console_scripts]
+cugrep = pycugrep.cli:main

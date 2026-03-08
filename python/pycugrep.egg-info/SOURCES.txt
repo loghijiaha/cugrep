@@ -1,0 +1,11 @@
+setup.py
+pycugrep/__init__.py
+pycugrep/cli.py
+pycugrep.egg-info/PKG-INFO
+pycugrep.egg-info/SOURCES.txt
+pycugrep.egg-info/dependency_links.txt
+pycugrep.egg-info/entry_points.txt
+pycugrep.egg-info/not-zip-safe
+pycugrep.egg-info/requires.txt
+pycugrep.egg-info/top_level.txt
+pycugrep/bin/cugrep

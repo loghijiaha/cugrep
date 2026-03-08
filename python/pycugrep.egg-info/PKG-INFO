@@ -1,0 +1,13 @@
+Metadata-Version: 2.1
+Name: pycugrep
+Version: 0.1.0
+Summary: A GPU-accelerated grep tool built with cuDF.
+Home-page: https://github.com/your-repo/pycugrep
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Operating System :: POSIX :: Linux
+Classifier: Topic :: Utilities
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+Requires-Dist: importlib_resources; python_version < "3.9"
+Requires-Dist: rapids-logger
