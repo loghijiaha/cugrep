@@ -43,8 +43,8 @@ jobs:
       - name: Get package version
         id: get_version
         run: |
-          # Extract version from setup.py using grep -oP with corrected quoting
-          BASE_VERSION=$(grep -oP 'version=['"]\K[0-9.]+?(?=['"])' python/setup.py | head -1)
+          # Extract version from setup.py using grep -oP for robustness and correct quoting
+          BASE_VERSION=$(grep -oP "version='\K[0-9.]+(?=')" python/setup.py | head -1)
           DYNAMIC_VERSION="${BASE_VERSION}.post${{ github.run_number }}"
           echo "Setting dynamic version: ${DYNAMIC_VERSION}"
           echo "version=${DYNAMIC_VERSION}" >> $GITHUB_OUTPUT
